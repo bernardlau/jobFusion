@@ -1,0 +1,14 @@
+{
+  "name": "jobfusion",
+  "version": "1.0.0",
+  "description": "Consolidate job details from various job seeking sites",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Bernard Lau",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
