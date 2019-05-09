@@ -46,21 +46,23 @@ class App extends React.Component {
     return (
       <div>
         <div className='nav'>
-          <span 
-            className={this.state.view === 'jobs' ? 'nav-selected' : 'nav-unselected'}
-            onClick={() => this.changeView('jobs')}>
-            Jobs
-          </span>
-          <span 
-            className={this.state.view === 'applied' ? 'nav-selected' : 'nav-unselected'}
-            onClick={() => this.changeView('applied')}>
-            Applied
-          </span>
-          <span 
-            className={this.state.view === 'aboutMe' ? 'nav-selected' : 'nav-unselected'}
-            onClick={() => this.changeView('aboutMe')}>
-            About Me
-          </span>
+          <ul>
+            <li 
+              className={this.state.view === 'jobs' ? 'nav-selected' : 'nav-unselected'}
+              onClick={() => this.changeView('jobs')}>
+              Jobs
+            </li>
+            <li 
+              className={this.state.view === 'applied' ? 'nav-selected' : 'nav-unselected'}
+              onClick={() => this.changeView('applied')}>
+              Applied
+            </li>
+            <li 
+              className={this.state.view === 'aboutMe' ? 'nav-selected' : 'nav-unselected'}
+              onClick={() => this.changeView('aboutMe')}>
+              About Me
+            </li>
+          </ul>
         </div>
 
         <div className="main">
