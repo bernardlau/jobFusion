@@ -65,8 +65,9 @@ li:hover::after {
   background: #f5f5f5;
   display: grid;
   grid-template-columns: 5% auto 10%;
-  grid-template-areas: "nav jobs .";
+  grid-template-areas: "nav jobs sidemenu";
   position: relative;
+  padding-bottom: 20px;
 }
 
 .jobs {
@@ -92,4 +93,50 @@ li:hover::after {
 .subtitle, .metadata {
   margin: 0;
   margin-bottom: 3px;
+}
+
+/* Side Menu */
+.sidemenu {
+  grid-area: sidemenu;
+  position: relative;
+  min-height: 250px;
+}
+#menu {
+  float: right;
+  grid-area: sidemenu;
+  height: calc(25vh - 60px);
+  width: 75px;
+  background-color: white;
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
+  transition: -webkit-transform 300ms;
+  transition: transform 300ms;
+  transition: transform 300ms, -webkit-transform 300ms;
+}
+#menu ul {
+  margin-top: 0px;
+  padding: 0px;
+  list-style-type: none;
+  text-align: left;
+}
+#menu li {
+  width: 100%;
+  font-size: 2em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.fas, .fa-check {
+  color: #37d6c1;
+  padding-right: 8px;
+  height: 20px;
+}
+
+li a {
+  text-decoration: none;
+  color: black;
+}
+
+#menu.isopen {
+  -webkit-transform: none;
+  transform: none;
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const JobCards = (props) => (
-  <div className="jobs">
+  <div className="jobs" onClick={props.onClick}>
     {props.jobsList.map((job) => {
       return (
         <div className="job-row shadow" key={job.id}>
