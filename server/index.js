@@ -5,8 +5,10 @@ const port = 3000;
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+
+app.post('/id/:id/site/:site', (req, res) => {
+  console.log(req.params);
 });
+
 
 app.listen(port, () => console.log(`Listening on port ${port}!`))
