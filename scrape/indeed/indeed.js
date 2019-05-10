@@ -18,7 +18,7 @@ for (let k = 0; k < searchTerms.length; k++) {
       const pageNum = i * 10;
       const city = cities[j];
       const searchQuery = searchTerms[k];
-      const url = `https://www.indeed.com/jobs?q=${searchQuery}&l=${city}&start=${pageNum}`;
+      const url = `https://www.indeed.com/jobs?q=${searchQuery}&l=${city}&start=${pageNum}&sort=date`;
       customHeaderRequest(url)
         .then((html) => {
           const jobs = [];
@@ -60,7 +60,8 @@ const jobParse = function(url, id) {
         metadataHeader: cheerio('.jobsearch-JobMetadataHeader-item', html).text(),
         description: cheerio('#jobDescriptionText', html).text().substring(0, 250),
         href: url,
-        id: id
+        id: id,
+        site: 'indeed'
       }
     })
     .catch((err) => {
