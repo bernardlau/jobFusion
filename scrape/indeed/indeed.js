@@ -56,8 +56,8 @@ const jobParse = function(url, id) {
     .then((html) => {
       return {
         title: cheerio('.jobsearch-JobInfoHeader-title', html).text(),
-        subTitle: cheerio('.jobsearch-JobInfoHeader-subtitle', html).text(),
-        metadataHeader: cheerio('.jobsearch-JobMetadataHeader-item', html).text(),
+        subtitle: cheerio('.jobsearch-JobInfoHeader-subtitle', html).text(),
+        metadataheader: cheerio('.jobsearch-JobMetadataHeader-item', html).text(),
         description: cheerio('#jobDescriptionText', html).text().substring(0, 250),
         href: url,
         id: id,
