@@ -85,6 +85,7 @@ class App extends React.Component {
     $.ajax({
       method: 'POST',
       url: `${window.location.href}id/${id}/site/${site}`,
+      data: (this.state.currentJob),
       success: function(data) {
         // feature to display status if successful or already applied
         console.log('data', data);
