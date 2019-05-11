@@ -17,6 +17,7 @@ class App extends React.Component {
     this.sideToggle = this.sideToggle.bind(this);
     this.handleDocumentClick = this.handleDocumentClick.bind(this);
     this.handleAppliedSubmit = this.handleAppliedSubmit.bind(this);
+    this.getScrapedJobs = this.getScrapedJobs.bind(this);
   }
   setCurrentJob(e) {
     this.setState({
@@ -45,10 +46,11 @@ class App extends React.Component {
   }
 
   handleAppliedSubmit() {
-    const {id, site} = this.state.currentJob;
+    const {job_id, site} = this.state.currentJob;
+    console.log(this.state.currentJob)
     $.ajax({
       method: 'POST',
-      url: `${window.location.href}id/${id}/site/${site}`,
+      url: `${window.location.href}id/${job_id}/site/${site}`,
       data: (this.state.currentJob),
       success: function(data) {
         // feature to display status if successful or already applied
@@ -57,8 +59,22 @@ class App extends React.Component {
     });
   }
 
+  getScrapedJobs(state) {
+    $.ajax({
+      method: 'GET',
+      url: `${window.location.href}jobs`,
+      data: (this.state.currentJob),
+      success: function(data) {
+        state.setState({
+          jobsList: data
+        });
+      } 
+    });
+  }
+
   componentDidMount() {
     document.addEventListener('click', this.handleDocumentClick, true);
+    this.getScrapedJobs(this);
   }
   componentWillUnmount() {
     document.removeEventListener('click', this.handleDocumentClick, false);

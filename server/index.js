@@ -17,6 +17,16 @@ app.post('/id/:id/site/:site', (req, res) => {
   });
 });
 
+app.get('/jobs', (req, res) => {
+  db.getScrapedJobs((err, data) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 app.get('/applied/jobs', (req, res) => {
   db.getAppliedJobs((err, data) => {
     if (err) {

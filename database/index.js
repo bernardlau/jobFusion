@@ -1,10 +1,9 @@
 const knex = require('./knex');
 
 var postAppliedJob = (jobInfo, cb) => {
-  const {id, href, description, subtitle, metadataheader, title, site} = jobInfo;
+  const {job_id, site} = jobInfo;
   return knex('appliedjobs')
-  .insert({job_id: id, href: href, description: description, 
-          subtitle: subtitle, metadata: metadataheader, title: title, site: site})
+  .insert({job_id: job_id, site: site})
   .then((result) => {
     return cb(null, result);
   })
@@ -15,8 +14,10 @@ var postAppliedJob = (jobInfo, cb) => {
 
 var getAppliedJobs = (cb) => {
   return knex('appliedjobs')
-  .select('title', 'subtitle', 'date_applied', 'site', 'href', 'job_id')
-  .orderBy('date_applied')
+  .join('jobs', 'appliedjobs.job_id', 'jobs.job_id')
+  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id')
+  .orderBy('appliedjobs.date_applied')
+  .limit(20)
   .then((results) => {
     cb(null, results);
   })
@@ -25,4 +26,16 @@ var getAppliedJobs = (cb) => {
   })
 }
 
-module.exports = {postAppliedJob, getAppliedJobs};
+var getScrapedJobs = (cb) => {
+  return knex('jobs')
+  .select('title', 'subtitle', 'description', 'metadata', 'site', 'href', 'job_id')
+  .limit(18)
+  .then((results) => {
+    cb(null, results);
+  })
+  .catch((err) => {
+    cb(err);
+  })
+}
+
+module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs};

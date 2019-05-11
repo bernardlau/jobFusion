@@ -2,3 +2,4 @@ package-lock.json
 node_modules
 indeedJobs.json
 config.js
+bundle.js

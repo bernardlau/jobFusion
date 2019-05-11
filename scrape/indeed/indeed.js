@@ -38,7 +38,7 @@ var scrapeIndeed = async function() {
           }).then((jobsDescriptions) => {
             allJobs = allJobs.concat(jobsDescriptions);
           }).catch((err) => {
-            throw err;
+            console.log('err', err);
           });
       }
     }
@@ -56,7 +56,8 @@ const jobParse = function(url, id) {
         description: cheerio('#jobDescriptionText', html).text().substring(0, 250).replace(/'/g, ""),
         href: url,
         job_id: id,
-        site: 'indeed'
+        site: 'indeed',
+        status: 'new'
       }
     })
     .catch((err) => {
@@ -66,10 +67,11 @@ const jobParse = function(url, id) {
 
 scrapeIndeed()
 .then(()=> {
+  console.log(allJobs);
   knex.raw(
-    `insert into jobs (title, subtitle, metadata, description, href, job_id, site)
-    select title, subtitle, metadata, description, href, job_id, site
-    from json_to_recordset('${JSON.stringify(allJobs)}') AS x(title text, subtitle text, metadata text, description text, href text, job_id text, site text)
+    `insert into jobs (title, subtitle, metadata, description, href, job_id, site, status)
+    select title, subtitle, metadata, description, href, job_id, site, status
+    from json_to_recordset('${JSON.stringify(allJobs)}') AS x(title text, subtitle text, metadata text, description text, href text, job_id text, site text, status text)
     on conflict (job_id, site) do nothing;`
   ).then((results) => {
       console.log('done', results);
