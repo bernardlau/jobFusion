@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS appliedjobs;
 
 CREATE TABLE IF NOT EXISTS jobs (
   job_id varchar(20),
-  href varchar(1000),
+  href varchar(1250),
   description varchar(250),
   subtitle varchar(100),
   metadata varchar(100),
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 CREATE TABLE IF NOT EXISTS appliedjobs (
   job_id varchar(20),
-  href varchar(1000),
+  href varchar(1250),
   description varchar(250),
   date_applied DATE NOT NULL DEFAULT CURRENT_DATE,
   subtitle varchar(100),

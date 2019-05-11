@@ -1,5 +1,4 @@
-const config = require('./knex').development;
-const knex = require('knex')(config);
+const knex = require('./knex');
 
 var postAppliedJob = (jobInfo, cb) => {
   const {id, href, description, subtitle, metadataheader, title, site} = jobInfo;
@@ -16,7 +15,7 @@ var postAppliedJob = (jobInfo, cb) => {
 
 var getAppliedJobs = (cb) => {
   return knex('appliedjobs')
-  .select('title', 'subtitle', 'date_applied', 'site')
+  .select('title', 'subtitle', 'date_applied', 'site', 'href', 'job_id')
   .orderBy('date_applied')
   .then((results) => {
     cb(null, results);

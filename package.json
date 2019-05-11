@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm run test",
     "start": "nodemon server/index.js",
-    "react": "webpack -d --watch"
+    "react": "webpack -d --watch",
+    "seed": "knex seed:run"
   },
   "author": "Bernard Lau",
   "license": "ISC",

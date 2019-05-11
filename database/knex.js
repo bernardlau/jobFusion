@@ -1,12 +1,3 @@
-var db = require('../config').development;
+const config = require('../knexfile.js').development;
 
-module.exports = {
-  development: {
-    client: 'pg',
-    connection: db
-  },
-  production: {
-    client: 'pg',
-    connection: db
-  }
-};
+module.exports = require('knex')(config);

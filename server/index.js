@@ -24,7 +24,7 @@ app.get('/applied/jobs', (req, res) => {
     } else {
       res.status(200).send(data);
     }
-  })
-})
+  });
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}!`))

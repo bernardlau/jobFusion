@@ -4,7 +4,7 @@ class Applied extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      applied: ['sample']
+      applied: []
     }
     this.getAppliedJobs = this.getAppliedJobs.bind(this);
   }
@@ -25,17 +25,17 @@ class Applied extends React.Component {
   }
 
   render() {
-    return(
-    <div>
-      {this.state.applied.map((job) => (
-          <div className="job-row shadow">
-            <h3 className="job-data"><a>{job.title}</a></h3>
-            <div className="job-data subtitle">{job.subtitle}</div>
-            <div className="job-data">{job.date_applied}</div>
+    return (
+      <div className="jobs-applied">
+        {this.state.applied.map((job) => (
+          <div className="applied-row shadow" key={job.job_id}>
+            <h3 className="applied-data"><a href={job.href}>{job.title}</a></h3>
+            <div className="applied-data subtitle">{job.subtitle}</div>
+            <div className="applied-data">{job.date_applied}</div>
+            <div className="applied-data">{job.site}</div>
           </div>
-        )
-      )}
-    </div>
+        ))}
+      </div>
     )
   }
 }
