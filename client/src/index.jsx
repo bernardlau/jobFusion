@@ -47,7 +47,6 @@ class App extends React.Component {
 
   handleAppliedSubmit() {
     const {job_id, site} = this.state.currentJob;
-    console.log(this.state.currentJob)
     $.ajax({
       method: 'POST',
       url: `${window.location.href}id/${job_id}/site/${site}`,
@@ -84,27 +83,26 @@ class App extends React.Component {
     let sideStatus = this.state.isOpen ? 'isopen shadow' : '';
     return (
       <div>
-        <div className='nav'>
-          <ul>
-            <li 
-              className={this.state.view === 'jobs' ? 'nav-selected' : 'nav-unselected'}
-              onClick={() => this.changeView('jobs')}>
-              Jobs
-            </li>
-            <li 
-              className={this.state.view === 'applied' ? 'nav-selected' : 'nav-unselected'}
-              onClick={() => this.changeView('applied')}>
-              Applied
-            </li>
-            <li 
-              className={this.state.view === 'aboutMe' ? 'nav-selected' : 'nav-unselected'}
-              onClick={() => this.changeView('aboutMe')}>
-              About Me
-            </li>
-          </ul>
-        </div>
-
         <div className="main">
+          <div className='nav'>
+            <ul>
+              <li 
+                className={this.state.view === 'jobs' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('jobs')}>
+                Jobs
+              </li>
+              <li 
+                className={this.state.view === 'applied' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('applied')}>
+                Applied
+              </li>
+              <li 
+                className={this.state.view === 'aboutMe' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('aboutMe')}>
+                About Me
+              </li>
+            </ul>
+          </div>
           {this.state.view === 'jobs'
             ? <JobCards jobsList={this.state.jobsList} isOpen={this.state.isOpen} onClick={(e) => {this.sideToggle(e); this.setCurrentJob(e);}}/>
             : this.state.view ==='applied' 

@@ -27,14 +27,31 @@ class Applied extends React.Component {
   render() {
     return (
       <div className="jobs-applied">
-        {this.state.applied.map((job) => (
-          <div className="applied-row shadow" key={job.job_id}>
-            <h3 className="applied-data"><a href={job.href}>{job.title}</a></h3>
-            <div className="applied-data subtitle">{job.subtitle}</div>
-            <div className="applied-data">{job.date_applied}</div>
-            <div className="applied-data">{job.site}</div>
-          </div>
-        ))}
+        <table>
+          <thead>
+            <tr>
+              <th colSpan='5'>Applied Jobs</th>
+            </tr>
+            <tr>
+              <th>Title</th>
+              <th>SubTitle</th>
+              <th>Date Applied</th>
+              <th>Status</th>
+              <th>Site</th>
+            </tr>
+          </thead>
+            <tbody>
+              {this.state.applied.map((job) => (
+                <tr key={job.job_id}>
+                  <td><a href={job.href}>{job.title}</a></td>
+                  <td>{job.subtitle}</td>
+                  <td>{job.date_applied}</td>
+                  <td>{job.status}</td>
+                  <td>{job.site}</td>
+                </tr>
+              ))}
+            </tbody>
+        </table>
       </div>
     )
   }

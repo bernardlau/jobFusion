@@ -15,7 +15,7 @@ var postAppliedJob = (jobInfo, cb) => {
 var getAppliedJobs = (cb) => {
   return knex('appliedjobs')
   .join('jobs', 'appliedjobs.job_id', 'jobs.job_id')
-  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id')
+  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status')
   .orderBy('appliedjobs.date_applied')
   .limit(20)
   .then((results) => {
