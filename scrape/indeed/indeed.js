@@ -67,19 +67,18 @@ const jobParse = function(url, id) {
 
 scrapeIndeed()
 .then(()=> {
-  console.log(allJobs);
   knex.raw(
     `insert into jobs (title, subtitle, metadata, description, href, job_id, site, status)
     select title, subtitle, metadata, description, href, job_id, site, status
     from json_to_recordset('${JSON.stringify(allJobs)}') AS x(title text, subtitle text, metadata text, description text, href text, job_id text, site text, status text)
     on conflict (job_id, site) do nothing;`
   ).then((results) => {
-      console.log('done', results);
-    })
-    .catch((err) => {
-      console.log('insert error', err);
-    })
-    .finally(() => {
-      return knex.destroy();
-    });
+    console.log('done', results);
+  })
+  .catch((err) => {
+    console.log('insert error', err);
+  })
+  .finally(() => {
+    return knex.destroy();
+  });
 })

@@ -43,9 +43,9 @@ class Applied extends React.Component {
             <tbody>
               {this.state.applied.map((job) => (
                 <tr key={job.job_id}>
-                  <td><a href={job.href}>{job.title}</a></td>
+                  <td><a href={job.href.replace(/[$][0-9]/g, "?")} target="_blank">{job.title}</a></td>
                   <td>{job.subtitle}</td>
-                  <td>{job.date_applied}</td>
+                  <td>{job.date_applied.substring(0, job.date_applied.length-5).replace(/[T]/," ")}</td>
                   <td>{job.status}</td>
                   <td>{job.site}</td>
                 </tr>

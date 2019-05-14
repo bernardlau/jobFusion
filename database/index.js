@@ -4,8 +4,16 @@ var postAppliedJob = (jobInfo, cb) => {
   const {job_id, site} = jobInfo;
   return knex('appliedjobs')
   .insert({job_id: job_id, site: site})
-  .then((result) => {
-    return cb(null, result);
+  .then(() => {
+    return knex('jobs')
+    .where({job_id: job_id, site: site})
+    .update('status', 'applied')
+    .then((result) => {
+      return cb(null, result);
+    })
+    .catch((error) => {
+      return cb(error);
+    });
   })
   .catch((error) => {
     return cb(error);
@@ -16,7 +24,7 @@ var getAppliedJobs = (cb) => {
   return knex('appliedjobs')
   .join('jobs', 'appliedjobs.job_id', 'jobs.job_id')
   .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status')
-  .orderBy('appliedjobs.date_applied')
+  .orderBy('appliedjobs.date_applied', 'desc')
   .limit(20)
   .then((results) => {
     cb(null, results);
@@ -28,7 +36,9 @@ var getAppliedJobs = (cb) => {
 
 var getScrapedJobs = (cb) => {
   return knex('jobs')
-  .select('title', 'subtitle', 'description', 'metadata', 'site', 'href', 'job_id')
+  .select('title', 'subtitle', 'description', 'metadata', 'site', 'href', 'job_id', 'datescraped')
+  .orderBy('datescraped', 'desc')
+  .where('status', 'new')
   .limit(18)
   .then((results) => {
     cb(null, results);
@@ -38,4 +48,30 @@ var getScrapedJobs = (cb) => {
   })
 }
 
-module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs};
+var getAboutMe = (cb) => {
+  return knex('aboutme')
+  .select('*')
+  .then((results) => {
+    cb(null, results);
+  })
+  .catch((err) => {
+    cb(err);
+  })
+}
+
+var updateAboutMe = (cb) => {
+  knex.raw(
+    `insert into aboutme (linkedin, portfolio, github, education, 
+      educationyear, jobonetitle, joboneyear, jobonedescription, 
+      jobtwotitle, jobtwoyear, jobtwodescription, keywords)
+      VALUES ()
+      on conflict (id) do update;`
+  ).then((results) => {
+    console.log('done', results);
+  })
+  .catch((err) => {
+    console.log('insert error', err);
+  })
+}
+
+module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs, getAboutMe, updateAboutMe};

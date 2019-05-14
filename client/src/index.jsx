@@ -2,6 +2,7 @@ import React from 'react';
 import JobCards from './components/JobCards.jsx';
 import SideMenu from './components/SideMenu.jsx';
 import Applied from './components/Applied.jsx';
+import AboutMe from './components/AboutMe.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,13 +48,14 @@ class App extends React.Component {
 
   handleAppliedSubmit() {
     const {job_id, site} = this.state.currentJob;
+    var state = this;
     $.ajax({
       method: 'POST',
       url: `${window.location.href}id/${job_id}/site/${site}`,
       data: (this.state.currentJob),
       success: function(data) {
         // feature to display status if successful or already applied
-        console.log('data', data);
+        state.getScrapedJobs(state);
       } 
     });
   }

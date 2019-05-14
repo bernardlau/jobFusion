@@ -37,4 +37,24 @@ app.get('/applied/jobs', (req, res) => {
   });
 });
 
+app.get('/aboutme', (req, res) => {
+  db.getAboutMe((err, data) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
+app.post('/aboutme', (req, res) => {
+  db.updateAboutMe((err, data) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(data);
+    }
+  });
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}!`))
