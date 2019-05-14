@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 3000;
 const db = require('../database/index');
+const fs = require('fs');
 
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,21 +39,11 @@ app.get('/applied/jobs', (req, res) => {
 });
 
 app.get('/aboutme', (req, res) => {
-  db.getAboutMe((err, data) => {
+  fs.readFile(__dirname + '/aboutme.json', 'utf8', (err, data) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.status(200).send(data);
-    }
-  });
-});
-
-app.post('/aboutme', (req, res) => {
-  db.updateAboutMe((err, data) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).send(data);
+      res.status(200).send(JSON.parse(data));
     }
   });
 });

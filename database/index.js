@@ -48,30 +48,4 @@ var getScrapedJobs = (cb) => {
   })
 }
 
-var getAboutMe = (cb) => {
-  return knex('aboutme')
-  .select('*')
-  .then((results) => {
-    cb(null, results);
-  })
-  .catch((err) => {
-    cb(err);
-  })
-}
-
-var updateAboutMe = (cb) => {
-  knex.raw(
-    `insert into aboutme (linkedin, portfolio, github, education, 
-      educationyear, jobonetitle, joboneyear, jobonedescription, 
-      jobtwotitle, jobtwoyear, jobtwodescription, keywords)
-      VALUES ()
-      on conflict (id) do update;`
-  ).then((results) => {
-    console.log('done', results);
-  })
-  .catch((err) => {
-    console.log('insert error', err);
-  })
-}
-
-module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs, getAboutMe, updateAboutMe};
+module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs};

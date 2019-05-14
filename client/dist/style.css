@@ -80,7 +80,7 @@ li:hover::after {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.job-row {
+.job-row, .aboutme-row {
   border-width: 0;
   border-style: solid;
   border-color: white;
@@ -147,7 +147,7 @@ li a {
 }
 
 /* Applied Section Table */
-.jobs-applied {
+.jobs-applied, .aboutme {
   grid-area: jobs;
 }
 table {
