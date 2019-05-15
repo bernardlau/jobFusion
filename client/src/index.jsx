@@ -23,7 +23,7 @@ class App extends React.Component {
   setCurrentJob(e) {
     this.setState({
       currentJob: JSON.parse(e.currentTarget.getAttribute('value'))
-    })
+    });
   }
 
   changeView(option) {
@@ -72,7 +72,7 @@ class App extends React.Component {
       } 
     });
   }
-
+  
   componentDidMount() {
     document.addEventListener('click', this.handleDocumentClick, true);
     this.getScrapedJobs(this);
@@ -108,7 +108,7 @@ class App extends React.Component {
           {this.state.view === 'jobs'
             ? <JobCards jobsList={this.state.jobsList} isOpen={this.state.isOpen} onClick={(e) => {this.sideToggle(e); this.setCurrentJob(e);}}/>
             : this.state.view ==='applied' 
-            ? <Applied/>
+            ? <Applied onClick={(e) => {this.setCurrentJob(e);}}/>
             : <AboutMe/>
           }
           <div className="sidemenu">
