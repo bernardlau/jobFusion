@@ -60,4 +60,15 @@ app.get('/appliedJob', (req, res) => {
   });
 });
 
+app.put('/appliedJob', (req, res) => {
+  const jobInfo = {job_id: req.body.job_id, site: req.body.site, notes: req.body.notes, status: req.body.status}
+  db.updateAppliedJobInfo(jobInfo, (err, data) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(JSON.stringify(data));
+    }
+  });
+});
+
 app.listen(port, () => console.log(`Listening on port ${port}!`))

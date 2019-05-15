@@ -30,13 +30,17 @@ class Applied extends React.Component {
       applied: [],
       isModalOpen: false,
       isInnerModalOpen: false,
-      currentJobInfo: []
+      currentJobInfo: [],
+      notes: "",
+      status: "rejected"
     }
     this.getAppliedJobs = this.getAppliedJobs.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
     this.onClick = this.onClick.bind(this);
     this.getAppliedJobInfo = this.getAppliedJobInfo.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
   getAppliedJobs() {
     var state = this;
@@ -77,6 +81,28 @@ class Applied extends React.Component {
     this.props.onClick(e);
     this.getAppliedJobInfo(e.currentTarget.getAttribute('value'));
     this.openModal();
+  }
+  handleChange(e) {
+    const target = e.target;
+    const value = target.type === 'dropdown' ? target.status : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+  handleSubmit(e) {
+    e.preventDefault();
+    var state = this;
+    const {job_id, site} = this.state.currentJobInfo[0];
+    $.ajax({
+      method: 'PUT',
+      url: `${window.location.href}appliedJob`,
+      data: {job_id: job_id, site: site, notes: this.state.notes, status: this.state.status},
+      success: function(data) {
+        state.getAppliedJobs();
+      } 
+    });
   }
   componentDidMount() {
     this.getAppliedJobs();
@@ -130,15 +156,31 @@ class Applied extends React.Component {
               );
             })}
           </div>
-          <button
-						style={{
-							...mainStyle.button,
-							margin: 0,
-							width: "auto",
-							marginTop: 10
-						}}
-						onClick={this.closeModal}
-					>Close</button>
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              Change status:
+              <select name="status" type="dropdown" status={this.state.status} onChange={this.handleChange}>
+                <option value="rejected">Rejected</option>
+                <option value="screening">Phone screen</option>
+                <option value="onsite">Onsite</option>
+                <option value="offer">Offer</option>
+                <option value="new">New</option>
+              </select>
+            </label>
+            <label>
+              Update Notes:
+              <textarea name="notes" type="notes" value={this.state.notes} onChange={this.handleChange}/>
+            </label>
+            <button
+              style={{
+                ...mainStyle.button,
+                margin: 0,
+                width: "auto",
+                marginTop: 10
+              }}
+              onClick={this.closeModal}
+            >Update</button>
+          </form>
         </Modal>
       </div>
     )

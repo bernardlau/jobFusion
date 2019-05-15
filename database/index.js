@@ -44,7 +44,7 @@ var getScrapedJobs = (cb) => {
   })
   .catch((err) => {
     cb(err);
-  })
+  });
 }
 
 var getAppliedJobInfo = (currentJob, cb) => {
@@ -57,9 +57,31 @@ var getAppliedJobInfo = (currentJob, cb) => {
     cb(null, results);
   })
   .catch((err) => {
-    console.log(err)
     cb(err);
-  })
+  });
 }
 
-module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs, getAppliedJobInfo};
+var updateAppliedJobInfo = (currentJob, cb) => {
+  return knex('appliedjobs')
+  .update({notes: currentJob.notes})
+  .where('appliedjobs.job_id', currentJob.job_id)
+  .andWhere('appliedjobs.site', currentJob.site)
+  .then(() => {
+    return knex('jobs')
+    .update({status: currentJob.status})
+    .where('jobs.job_id', currentJob.job_id)
+    .andWhere('jobs.site', currentJob.site)
+    .then((results) => {
+      cb(null, results);
+    })
+    .catch((err) => {
+      cb(err);
+    });
+  })
+  .catch((err) => {
+    cb(err);
+  });
+}
+
+
+module.exports = {postAppliedJob, getAppliedJobs, getScrapedJobs, getAppliedJobInfo, updateAppliedJobInfo};
