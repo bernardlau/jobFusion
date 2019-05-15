@@ -127,7 +127,7 @@ class Applied extends React.Component {
             <tbody>
               {this.state.applied.map((job) => (
                 <tr key={job.job_id} onClick={this.onClick} value={JSON.stringify(job)}>
-                  <td><a href={job.href.replace(/[$][0-9]/g, "?")} target="_blank">{job.title}</a></td>
+                  <td><a href={job.href.replace(/[$]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])|[?]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])/g, "?")} target="_blank">{job.title}</a></td>
                   <td>{job.subtitle}</td>
                   <td>{job.date_applied.substring(0, job.date_applied.length-5).replace(/[T]/," ")}</td>
                   <td>{job.status}</td>
@@ -145,7 +145,7 @@ class Applied extends React.Component {
             {this.state.currentJobInfo.map((job) => {
               return (
                 <div className="modal-job-row shadow" key={job.job_id}>
-                  <h3 className="modal-job-data"><a href={job.href.replace(/[$][0-9]/g, "?")} target="_blank">{job.title}</a></h3>
+                  <h3 className="modal-job-data"><a href={job.href.replace(/[$]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])|[?]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])/g, "?")} target="_blank">{job.title}</a></h3>
                   <div className="modal-job-data subtitle">{job.subtitle}</div>
                   <div className="modal-job-data">Date Applied: {job.date_applied.substring(0, job.date_applied.length-5).replace(/[T]/," ")}</div>
                   <div className="modal-job-data">Status: {job.status}</div>
