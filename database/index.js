@@ -33,12 +33,12 @@ var getAppliedJobs = (cb) => {
   })
 }
 
-var getScrapedJobs = (cb) => {
+var getScrapedJobs = (page, cb) => {
   return knex('jobs')
   .select('title', 'subtitle', 'description', 'metadata', 'site', 'href', 'job_id', 'datescraped')
-  .orderBy('datescraped', 'desc')
   .where('status', 'new')
   .limit(18)
+  .offset(page*18)
   .then((results) => {
     cb(null, results);
   })

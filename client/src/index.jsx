@@ -1,6 +1,5 @@
 import React from 'react';
 import JobCards from './components/JobCards.jsx';
-import SideMenu from './components/SideMenu.jsx';
 import Applied from './components/Applied.jsx';
 import AboutMe from './components/AboutMe.jsx';
 
@@ -9,16 +8,33 @@ class App extends React.Component {
     super(props);
     this.state = {
       view: 'jobs',
-      isOpen: false,
       jobsList: [],
-      currentJob: []
+      currentJob: [],
+      error: false,
+      hasMore: true,
+      isLoading: false,
+      currentResults: 0
+    };
+    window.onscroll = () => {
+      const {
+        getScrapedJobs,
+        state: {
+          error,
+          isLoading,
+          hasMore
+        },
+    } = this
+    if (error || isLoading || !hasMore) return;
+    if ( document.documentElement.scrollHeight - document.documentElement.scrollTop
+      <= document.documentElement.clientHeight) {
+      this.setState({currentResults: this.state.currentResults+1});
+      getScrapedJobs();
     }
     this.setCurrentJob = this.setCurrentJob.bind(this);
     this.changeView = this.changeView.bind(this);
-    this.sideToggle = this.sideToggle.bind(this);
-    this.handleDocumentClick = this.handleDocumentClick.bind(this);
     this.handleAppliedSubmit = this.handleAppliedSubmit.bind(this);
     this.getScrapedJobs = this.getScrapedJobs.bind(this);
+    }
   }
   setCurrentJob(e) {
     this.setState({
@@ -31,58 +47,54 @@ class App extends React.Component {
       view: option
     });
   }
-
-  handleDocumentClick(e) {
-    if (this.state.isOpen === true) {
-      this.setState({
-        isOpen: false
-      });
-    };
-  }
-
-  sideToggle(e) {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
-
+  
   handleAppliedSubmit() {
     const {job_id, site} = this.state.currentJob;
-    var state = this;
     $.ajax({
       method: 'POST',
+      context: this,
       url: `${window.location.href}id/${job_id}/site/${site}`,
       data: (this.state.currentJob),
       success: function(data) {
         // feature to display status if successful or already applied
-        state.getScrapedJobs(state);
+        $.ajax({
+          method: 'GET',
+          context: this,
+          url: `${window.location.href}jobs`,
+          data: {page: this.state.currentResults},
+          success: function(data) {
+            this.setState({
+              jobsList: data,
+              isLoading: false,
+              hasMore: this.state.jobsList.length < 100
+            });
+          } 
+        });
       } 
     });
   }
 
-  getScrapedJobs(state) {
+  getScrapedJobs() {
     $.ajax({
       method: 'GET',
+      context: this,
       url: `${window.location.href}jobs`,
-      data: (this.state.currentJob),
+      data: {page: this.state.currentResults},
       success: function(data) {
-        state.setState({
-          jobsList: data
+        this.setState({
+          jobsList: this.state.jobsList.concat(data),
+          isLoading: false,
+          hasMore: this.state.jobsList.length < 100
         });
       } 
     });
   }
   
   componentDidMount() {
-    document.addEventListener('click', this.handleDocumentClick, true);
-    this.getScrapedJobs(this);
-  }
-  componentWillUnmount() {
-    document.removeEventListener('click', this.handleDocumentClick, false);
+    this.getScrapedJobs();
   }
 
   render() {
-    let sideStatus = this.state.isOpen ? 'isopen shadow' : '';
     return (
       <div>
         <div className="main">
@@ -106,14 +118,11 @@ class App extends React.Component {
             </ul>
           </div>
           {this.state.view === 'jobs'
-            ? <JobCards jobsList={this.state.jobsList} isOpen={this.state.isOpen} onClick={(e) => {this.sideToggle(e); this.setCurrentJob(e);}}/>
+            ? <JobCards jobsList={this.state.jobsList} onClick={(e) => {this.setCurrentJob(e);}}/>
             : this.state.view ==='applied' 
             ? <Applied onClick={(e) => {this.setCurrentJob(e);}}/>
             : <AboutMe/>
           }
-          <div className="sidemenu">
-            <SideMenu sideStatus={sideStatus} onClick={() => {this.handleAppliedSubmit()}}/>
-          </div>
         </div>
       </div>
     )

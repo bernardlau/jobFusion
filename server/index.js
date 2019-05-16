@@ -20,7 +20,7 @@ app.post('/id/:id/site/:site', (req, res) => {
 });
 
 app.get('/jobs', (req, res) => {
-  db.getScrapedJobs((err, data) => {
+  db.getScrapedJobs(parseInt(req.query.page), (err, data) => {
     if (err) {
       res.status(400).send(err);
     } else {
