@@ -98,6 +98,32 @@ class App extends React.Component {
     return (
       <div>
         <div className="main">
+        <div className='sidenav'>
+            <ul>
+              <li className="profile">
+                <img className="image" src="/assets/bernard.png" alt="Avatar"/>
+              </li>
+              <li 
+                className={this.state.view === 'jobs' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('jobs')}>
+                <i className="far fa-newspaper"></i>
+              </li>
+              <li 
+                className={this.state.view === 'applied' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('applied')}>
+                <i className="fas fa-suitcase"></i>
+              </li>
+              <li 
+                className={this.state.view === 'aboutMe' ? 'nav-selected' : 'nav-unselected'}
+                onClick={() => this.changeView('aboutMe')}>
+                <i className="far fa-user"></i>
+              </li>
+              <li className="nav-unselected"
+                onClick={() => window.scrollTo(0, 0)}>
+                <i className="fas fa-chevron-up"></i>
+              </li>
+            </ul>
+          </div>
           <div className='nav'>
             <ul>
               <li 

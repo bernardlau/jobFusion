@@ -36,9 +36,10 @@ li {
   background: #f5f5f5;
   height: 75px;
   grid-area: nav-top;
+  padding-left: 20px;
 }
 .nav-selected, .nav-unselected {
-  margin: 10px;
+  margin: 9px;
 }
 
 .nav-selected {
@@ -65,7 +66,7 @@ li:hover::after {
   min-height: 250px;
   background: #f5f5f5;
   display: grid;
-  grid-template-columns: 5% auto 10%;
+  grid-template-columns: 4% auto 10%;
   grid-template-areas: "nav nav-top ."
                        "nav jobs sidemenu";
   position: relative;
@@ -78,6 +79,7 @@ li:hover::after {
   grid-row-gap: 15px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  padding-left: 30px;
 }
 
 .job-row, .aboutme-row {
@@ -130,7 +132,7 @@ li:hover::after {
   border-bottom: 1px solid rgba(0, 0, 0, 0.14);
 }
 
-.fas, .fa-check {
+.fa-check {
   color: #37d6c1;
   padding-right: 8px;
   height: 20px;
@@ -149,6 +151,7 @@ li a {
 /* Applied Section Table */
 .jobs-applied, .aboutme {
   grid-area: jobs;
+  padding-left: 30px;
 }
 table {
   text-align: left;
@@ -190,4 +193,26 @@ tbody td {
 td:last-child {
   text-align: right;
   padding-right: 10px;
+}
+
+/* sidenav */
+.sidenav {
+  grid-area: nav;
+  height: 100%;
+  width: 4%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center right;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
 }
