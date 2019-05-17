@@ -147,19 +147,21 @@ class Applied extends React.Component {
                 <div className="modal-job-row shadow" key={job.job_id}>
                   <h3 className="modal-job-data"><a href={job.href.replace(/[$]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])|[?]([1-9][0-9][0-9]|[1-9][0-9]|[0-9])/g, "?")} target="_blank">{job.title}</a></h3>
                   <div className="modal-job-data subtitle">{job.subtitle}</div>
-                  <div className="modal-job-data">Date Applied: {job.date_applied.substring(0, job.date_applied.length-5).replace(/[T]/," ")}</div>
-                  <div className="modal-job-data">Status: {job.status}</div>
-                  <div className="modal-job-data metadata">More Information: {job.metadata}</div>
-                  <div className="modal-job-data">Job Description: {job.description}</div>
-                  <div className="modal-job-data">Notes: {job.notes}</div>
+                  <br/>
+                  <div className="modal-job-data">Date Applied: <p>{job.date_applied.substring(0, job.date_applied.length-5).replace(/[T]/," ")}</p></div>
+                  <div className="modal-job-data">Status: <p>{job.status}</p></div>
+                  <div className="modal-job-data metadata">More Information: <p>{job.metadata}</p></div>
+                  <div className="modal-job-data">Job Description: <span>{job.description}</span></div>
+                  <div className="modal-job-data">Notes: <span>{job.notes} </span></div>
                 </div>
               );
             })}
           </div>
+          <br/>
           <form onSubmit={this.handleSubmit}>
             <label>
               Change status:
-              <select name="status" type="dropdown" status={this.state.status} onChange={this.handleChange}>
+              <select className="select" name="status" type="dropdown" status={this.state.status} onChange={this.handleChange}>
                 <option value="rejected">Rejected</option>
                 <option value="screening">Phone screen</option>
                 <option value="onsite">Onsite</option>
@@ -167,10 +169,12 @@ class Applied extends React.Component {
                 <option value="new">New</option>
               </select>
             </label>
+            <br/>
             <label>
               Update Notes:
-              <textarea name="notes" type="notes" value={this.state.notes} onChange={this.handleChange}/>
-            </label>
+            </label>  
+            <textarea autoComplete="off" placeholder="Enter notes here." name="notes" type="notes" value={this.state.notes} onChange={this.handleChange}/>
+            
             <button
               style={{
                 ...mainStyle.button,

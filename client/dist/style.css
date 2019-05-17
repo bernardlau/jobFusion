@@ -195,6 +195,32 @@ td:last-child {
   padding-right: 10px;
 }
 
+textarea {
+  width: 500px;
+  height: 100px;
+}
+label {
+  display: block;
+}
+span {
+  margin-left: 125px;
+  display: block;
+}
+
+p {
+  width: 535px;
+  margin: 0;
+  padding: 0;
+  float: right;
+}
+
+.select {
+  padding: 5px;
+  appearance: none;
+  background: transparent;
+  background-size: 10px 10px;
+  margin-left: 20px;
+}
 /* sidenav */
 .sidenav {
   grid-area: nav;
@@ -216,3 +242,4 @@ td:last-child {
   width: 30px;
   height: 30px;
 }
+

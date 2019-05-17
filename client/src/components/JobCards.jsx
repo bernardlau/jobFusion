@@ -43,7 +43,7 @@ class JobCards extends React.Component {
         );
       })}
       <div className="sidemenu">
-        <SideMenu sideStatus={sideStatus} onClick={() => {this.handleAppliedSubmit()}}/>
+        <SideMenu sideStatus={sideStatus} onClick={() => {this.props.handleSubmit()}}/>
       </div>
     </div>
     

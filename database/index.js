@@ -22,7 +22,7 @@ var postAppliedJob = (jobInfo, cb) => {
 var getAppliedJobs = (cb) => {
   return knex('appliedjobs')
   .join('jobs', 'appliedjobs.job_id', 'jobs.job_id')
-  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status')
+  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status', 'jobs.metadata')
   .orderBy('appliedjobs.date_applied', 'desc')
   .limit(20)
   .then((results) => {
@@ -50,7 +50,7 @@ var getScrapedJobs = (page, cb) => {
 var getAppliedJobInfo = (currentJob, cb) => {
   return knex('appliedjobs')
   .join('jobs', 'appliedjobs.job_id', '=', 'jobs.job_id')
-  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status', 'appliedjobs.notes', 'jobs.description')
+  .select('jobs.title', 'jobs.subtitle', 'appliedjobs.date_applied', 'jobs.site', 'jobs.href', 'jobs.job_id', 'jobs.status', 'appliedjobs.notes', 'jobs.description', 'jobs.metadata')
   .where('appliedjobs.job_id', currentJob.job_id)
   .andWhere('appliedjobs.site', currentJob.site)
   .then((results) => {

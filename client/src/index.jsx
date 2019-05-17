@@ -144,7 +144,7 @@ class App extends React.Component {
             </ul>
           </div>
           {this.state.view === 'jobs'
-            ? <JobCards jobsList={this.state.jobsList} onClick={(e) => {this.setCurrentJob(e);}}/>
+            ? <JobCards jobsList={this.state.jobsList} handleSubmit={() => {this.handleAppliedSubmit()}} onClick={(e) => {this.setCurrentJob(e);}}/>
             : this.state.view ==='applied' 
             ? <Applied onClick={(e) => {this.setCurrentJob(e);}}/>
             : <AboutMe/>
